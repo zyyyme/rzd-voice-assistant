@@ -4,6 +4,7 @@ import { usePermission } from '@vueuse/core'
 import { useRecorder } from '../../composables/useRecorder'
 import { AudioVisualizer } from '../../utils';
 import { XMarkIcon } from '@heroicons/vue/24/outline'
+import { speech2text } from '../../services/api/voice'
 
 const emits = defineEmits(['close', 'submit'])
 
@@ -15,7 +16,7 @@ const  { startRecording, toggleStartAndStop, isRecording } = useRecorder({ getAs
 
 const microphoneAccess = usePermission('microphone')
 
-function onGetMp3 (audioObject) {
+async function onGetMp3 (audioObject) {
     emits('submit', audioObject)
 }
 

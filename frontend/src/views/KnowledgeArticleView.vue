@@ -29,7 +29,7 @@ onMounted(() => {
 
 <template>
     <main class="container mx-auto px-3 lg:px-0">
-        <nav> <router-link class="underline" to="/knowledge-base">База знаний</router-link> / {{ id }} </nav>
+        <nav> <router-link class="underline" to="/knowledge-base">База знаний</router-link> / Референс </nav>
         <div class="mt-8">
             <div v-if="isDataLoading" class="flex justify-center items-center my-50">
                 <span class="loading loading-infinity loading-lg"></span>

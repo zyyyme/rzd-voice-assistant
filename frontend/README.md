@@ -1,6 +1,14 @@
 # rzd-frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+Frontend part
+
+# TODO
+
+- [ ] Search response slider
+- [ ] Move messages to store
+- [ ] Stop conversation button
+- [ ] Stop generating button
+- [ ] Trye select series
 
 ## Recommended IDE Setup
 

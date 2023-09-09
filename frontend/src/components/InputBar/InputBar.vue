@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import VoiceInput from './VoiceInput.vue';
 import { useChat } from '../../composables/useChat'
+import { speech2text } from '../../services/api/voice'
 
 const textInput = ref('')
 const isVoiceInputEnabled = ref(false)
@@ -19,8 +20,9 @@ function toggleVoiceInput (value) {
     isVoiceInputEnabled.value = value
 }
 
-function onVoiceSubmit (audioObject) {
-    onUserMessage({ author: 'user', type: 'voice', body: { audioUrl: audioObject.url } })
+async function onVoiceSubmit (audioObject) {
+    const data = await speech2text(audioObject.data)
+    onUserMessage({ author: 'user', type: 'voice', body: { audioUrl: audioObject.url, transcription: data.decoded_text } })
     toggleVoiceInput(false)
 }
 </script>

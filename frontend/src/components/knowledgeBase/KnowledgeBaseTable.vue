@@ -15,18 +15,20 @@ defineProps({
             <thead>
                 <tr>
                     <th></th>
-                    <th>Foult</th>
-                    <th>Reason</th>
-                    <th>Solution</th>
+                    <th>Проблема</th>
+                    <th>Причина</th>
+                    <th>Решение</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- row 1 -->
                 <tr v-for="(item, idx) in docs" :class="{ 'hover': idx % 2 !== 0 }" :id="item.id">
-                    <th>{{  idx  }}</th>
+                    <th>
+                        <RouterLink :to="`/knowledge-base/${item.id}`" class="underline">{{ idx }}</RouterLink>
+                    </th>
                     <td>{{ item.fault }}</td>
                     <td>{{ item.reason }}</td>
-                    <td> {{  item.solution  }}</td>
+                    <td> {{ item.solution }}</td>
                 </tr>
             </tbody>
         </table>

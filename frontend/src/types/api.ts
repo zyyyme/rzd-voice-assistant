@@ -18,3 +18,12 @@ export interface  SearchResponse {
     text: string,
     documents: KnowledgeBaseArticle[]
 }
+
+export interface Speech2TextResponse {
+    decoded_text: string
+}
+
+export interface CheckConverstionResponse {
+    text: string
+    ok: boolean
+}
