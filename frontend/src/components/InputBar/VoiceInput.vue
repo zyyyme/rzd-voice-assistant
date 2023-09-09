@@ -12,11 +12,12 @@ const showVisualization = true
 const visualizationOptions = { backgroundColor: 'rgb(243, 244, 246)' }
 const visualizationType = 'SineWave'
 
-const  { startRecording, toggleStartAndStop, isRecording } = useRecorder({ getAsMp3: onGetMp3 })
+const  { startRecording, toggleStartAndStop, isRecording } = useRecorder({ getFullAudio: onGetMp3 })
 
 const microphoneAccess = usePermission('microphone')
 
 async function onGetMp3 (audioObject) {
+    console.log('onGetMp3', audioObject);
     emits('submit', audioObject)
 }
 

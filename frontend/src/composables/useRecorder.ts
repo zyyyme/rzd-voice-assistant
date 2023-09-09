@@ -21,6 +21,7 @@ export interface RecorderEvents {
     afterPauseRecording: () => void;
     afterResumeRecording: () => void;
     getAsMp3: (value: { data: Blob, url: string}) => void;
+    getFullAudio: (value: { data: Blob, url: string}) => void;
 }
 
 const toHHMMSS = (seconds: number): string =>  {
@@ -28,7 +29,7 @@ const toHHMMSS = (seconds: number): string =>  {
 }
 
 export const useRecorder: (options?: Partial<RecorderEvents>) => RecorderControls = (
-    { afterStartRecording, afterStopRecording, afterPauseRecording, afterResumeRecording, getAsMp3 } = {}
+    { afterStartRecording, afterStopRecording, afterPauseRecording, afterResumeRecording, getAsMp3, getFullAudio } = {}
 ) => {
     const isRecording = ref(false);
     const isPaused = ref(false);
@@ -90,7 +91,10 @@ export const useRecorder: (options?: Partial<RecorderEvents>) => RecorderControl
 
                 if (afterStartRecording) afterStartRecording();
 
+                const audioChunks: Blob[] = [] // manual         
+
                 recorder.addEventListener('dataavailable', (event: BlobEvent) => {
+                    audioChunks.push(event.data); // manual                    
                     recordingBlob.value = event.data;
                     recorder.stream.getTracks().forEach((t) => t.stop());
                     mediaRecorder.value = null;
@@ -99,6 +103,13 @@ export const useRecorder: (options?: Partial<RecorderEvents>) => RecorderControl
                         getMp3().then((data) => getAsMp3({data, url: URL.createObjectURL(data)}));
                     }
                 });
+
+                recorder.addEventListener("stop", () => {
+                    const audioBlob = new Blob(audioChunks);
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    if (getFullAudio) getFullAudio({ data: audioBlob, url: audioUrl })
+                });
+
                 AudioContext.startAnalyze(stream);
             })
             .catch((err) => console.log(err));

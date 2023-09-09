@@ -1,0 +1,8 @@
+{
+  "appId": "com.aomtech.app",
+  "appName": "RZD-AI-Assistant",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}

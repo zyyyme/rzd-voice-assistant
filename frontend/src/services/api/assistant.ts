@@ -1,5 +1,4 @@
 import { v4 as uuid } from 'uuid'
-
 import { api } from './'
 
 import { hasApiMocked } from '../../utils/config'
@@ -13,18 +12,10 @@ const responseQueryMock: DocumentMessageBody = {
 }
 
 export async function searchByQuery (query: string): Promise<SearchResponse> {
-    // if (hasApiMocked()) return responseQueryMock
-    const result = await api.get<any, SearchResponse>('/search', { params: { query } })
-    return result
-    // const messageBody: DocumentMessageBody = {
-    //     text: result.text,
-    //     referenceId: result.documents[0].id,
-    //     id: uuid()
-    // }
-    // return messageBody
+    return await api.get<any, SearchResponse>('/search', { params: { query } })
 }
 
 export async function checkConversation (history: Message[]): Promise<CheckConverstionResponse> {
-    if (import.meta.env.VITE_IS_MOCKED_CONVERSATION) return { text: 'Ну и что?', ok: false }
+    if (import.meta.env.VITE_IS_MOCKED_CONVERSATION) return { text: 'Ну и что?', ok: true }
     return api.post('/check', { history })
 }
