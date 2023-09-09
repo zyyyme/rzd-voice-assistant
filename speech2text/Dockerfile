@@ -7,9 +7,7 @@ RUN pip install --no-cache-dir -U openai-whisper
 
 RUN apt update && apt install ffmpeg --yes
 
-WORKDIR /src
-COPY /src/api.py /src/api.py
-
 ENV PYTHONPATH=$PYTHONPATH:/src
+ENV PYTHONPATH=$PYTHONPATH:/tiktoken
 
 CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "80"]
