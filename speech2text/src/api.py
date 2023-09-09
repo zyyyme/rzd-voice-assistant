@@ -1,4 +1,4 @@
-import sys
+import os
 import shutil
 import tempfile
 from tempfile import NamedTemporaryFile
@@ -9,12 +9,12 @@ import whisper
 from fastapi import FastAPI, UploadFile
 from pydantic import BaseModel
 
-sys.path.append("/tiktoken")
-
+os.system("cp /vocab/openai_public.py /usr/local/lib/python3.8/site-packages/tiktoken_ext/openai_public.py")
+# os.environ["TIKTOKEN_CACHE_DIR"] = "/vocab"
 
 app = FastAPI(title="Triton Inference Client")
 
-app.model = whisper.load_model("/models/tiny.pt").to("cuda")
+app.model = whisper.load_model("/models/medium.pt").to("cuda")
 
 class InferenceInput(BaseModel):
     text: str
