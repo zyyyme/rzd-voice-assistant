@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 class SearchResponse(BaseModel):
     text: str
-    document_id: str
+    documents: list[dict]
 
 
 class ClarificationResponse(BaseModel):

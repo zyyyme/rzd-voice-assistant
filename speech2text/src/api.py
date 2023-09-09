@@ -1,3 +1,4 @@
+import sys
 import shutil
 import tempfile
 from tempfile import NamedTemporaryFile
@@ -7,6 +8,8 @@ from typing import List, Dict, Optional
 import whisper
 from fastapi import FastAPI, UploadFile
 from pydantic import BaseModel
+
+sys.path.append("/tiktoken")
 
 
 app = FastAPI(title="Triton Inference Client")

@@ -5,6 +5,7 @@ class KnowledgeBaseElement(BaseModel):
     reason: str
     solution: str
     id: str
+    series: list[str]
 
 
 class KnowledgeBaseResponse(BaseModel):

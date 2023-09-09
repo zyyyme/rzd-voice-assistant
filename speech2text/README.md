@@ -4,4 +4,4 @@
 
 # Run
 
-```docker run -p 8080:80 -v /home/rinat/hackatons/whisper_stt/models/:/models -it --rm whisper_stt:latest```
+```docker run --gpus all -p 8080:80 -v $PWD/models/:/models -v $PWD/vocab:/vocab -v $PWD/src:/src whisper_stt:latest```

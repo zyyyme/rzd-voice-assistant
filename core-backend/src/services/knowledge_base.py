@@ -12,3 +12,10 @@ def get_all(train_series: str, page: int, limit: int):
         del doc['_id']
 
     return docs, total
+
+def get_by_id(doc_id: str):
+    db = get_db()
+    doc = db.knowledgebase.find_one({'_id': doc_id})
+
+    doc['id'] = doc.pop('_id')
+    return doc
