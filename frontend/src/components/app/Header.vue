@@ -15,23 +15,25 @@ import { RouterLink } from 'vue-router';
                         <RouterLink to="/search">Поиск</RouterLink>
                     </li>
                     <li>
-                        <RouterLink to="bd">База знаний</RouterLink>
+                        <RouterLink to="/knowledge-base">База Знаний</RouterLink>
+                        <!-- <RouterLink to="bd">База знаний</RouterLink>
                         <ul class="p-2">
                             <li><RouterLink to="">Глоссарий</RouterLink></li>
                             <li><RouterLink to="/knowledge-base">Инструкции</RouterLink></li>
-                        </ul>
+                        </ul> -->
                     </li>
                     <li><RouterLink to="/history">История</RouterLink></li>
                 </ul>
             </div>
-            <a href="/" class="btn btn-ghost normal-case text-xl">
+            <RouterLink to="/search" class="btn btn-ghost normal-case text-xl">
                 <img src="/svg/logo.svg" alt=""> x 23:59
-            </a>
+            </RouterLink>
             </div>
             <div class="navbar-center hidden lg:flex">
             <ul class="menu menu-horizontal px-1">
                 <li><RouterLink to="/search">Поиск</RouterLink></li>
-                <li tabindex="0">
+                <li><RouterLink to="/knowledge-base">База Знаний</RouterLink></li>
+                <!-- <li tabindex="0">
                 <details>
                     <summary>База знаний</summary>
                     <ul class="p-2">
@@ -39,7 +41,7 @@ import { RouterLink } from 'vue-router';
                         <li><a>Инструктции</a></li>
                     </ul>
                 </details>
-                </li>
+                </li> -->
                 <li><RouterLink to="/history">История</RouterLink></li>
             </ul>
             </div>

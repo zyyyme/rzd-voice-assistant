@@ -1,11 +1,21 @@
 <script setup lang="ts">
-import { PropType, onMounted, ref } from 'vue';
-import { DocumentMessageBody, Message, MessageBody, TextMessageBody } from '../../types/chat';
+import { PropType, onMounted, ref, computed } from 'vue';
+import { DocumentMessageBody, Message, MessageBody, TextMessageBody, VoiceMessageBody } from '../../types/chat';
 import User from './User.vue'
+import { PlayIcon } from '@heroicons/vue/24/solid'
+import { getText2SpeechLink } from '../../services/api/voice'
 
-defineProps({
+const props = defineProps({
     message: Object as PropType<Message>,
     isQuering: Boolean
+})
+
+const isAudioEnabled = ref(false)
+
+const audioUrl = computed(() => { 
+    if (!props.message?.body) return ''
+    const text = props.message?.type === 'voice' ? (props.message?.body as VoiceMessageBody).transcription : (props.message?.body as TextMessageBody).text
+    return text ? getText2SpeechLink(text) : ''
 })
 
 </script>
@@ -31,8 +41,11 @@ defineProps({
                 {{ ( message?.body as TextMessageBody).text }}
             </template>
         </div>
-        <div class="chat-footer opacity-50">
-            <!-- Прочитано в 12:46 -->
+        <div class="chat-footer opacity-50 mt-2">
+            <template v-if="!isQuering">
+                <button v-if="!isAudioEnabled" class="btn btn-sm" @click="() => isAudioEnabled = true"> <PlayIcon class="w-4 h-4" /> Прослушать </button>
+                <audio v-else autoplay controls controlslist="nodownload noplaybackrate nomute" :src="audioUrl" />
+            </template>
         </div>
     </div>
 </template>

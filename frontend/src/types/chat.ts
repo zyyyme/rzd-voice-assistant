@@ -1,4 +1,4 @@
-export type Author = 'assistent' | 'user'
+export type Author = 'assistant' | 'user'
 export type MessageType = 'text' | 'document' | 'voice'  // 'че-та еще '
 
 export interface Message {
