@@ -9,6 +9,7 @@ uvicorn = {extras = ["standard"], version = "*"}
 pymongo = "*"
 pydantic = "*"
 python-multipart = "*"
+requests = "*"
 
 [dev-packages]
 
