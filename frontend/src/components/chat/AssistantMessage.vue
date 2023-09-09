@@ -2,7 +2,7 @@
 import { PropType, onMounted, ref, computed } from 'vue';
 import { DocumentMessageBody, Message, MessageBody, TextMessageBody, VoiceMessageBody } from '../../types/chat';
 import User from './User.vue'
-import { PlayIcon } from '@heroicons/vue/24/solid'
+import { PlayIcon, StopIcon } from '@heroicons/vue/24/solid'
 import { getText2SpeechLink } from '../../services/api/voice'
 
 const props = defineProps({
@@ -38,12 +38,15 @@ const audioUrl = computed(() => {
                 </template>
             </template>
             <template v-else-if="message?.type === 'text'">
-                {{ ( message?.body as TextMessageBody).text }}
+                <span v-if="isQuering" class="loading loading-ball text-primary loading-lg"></span>
+                <template v-else-if="message?.body"> 
+                    {{ ( message?.body as TextMessageBody).text }}
+                </template>
             </template>
         </div>
         <div class="chat-footer opacity-50 mt-2">
             <template v-if="!isQuering">
-                <button v-if="!isAudioEnabled" class="btn btn-sm" @click="() => isAudioEnabled = true"> <PlayIcon class="w-4 h-4" /> Прослушать </button>
+                <button v-if="!isAudioEnabled" class="btn btn-sm" @click="() => isAudioEnabled = true"> <PlayIcon class="w-4 h-4" /> Слушать </button>
                 <audio v-else autoplay controls controlslist="nodownload noplaybackrate nomute" :src="audioUrl" />
             </template>
         </div>

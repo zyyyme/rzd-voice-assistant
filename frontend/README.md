@@ -3,7 +3,8 @@
 Frontend part
 
 # TODO
-
+- [ ] Transcription loading
+- [ ] Message time
 - [ ] Search response slider
 - [ ] Move messages to store
 - [ ] Stop conversation button

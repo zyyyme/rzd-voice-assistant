@@ -3,16 +3,18 @@ import { nextTick, ref } from 'vue'
 import { DocumentMessageBody, Message, MessageBody, MessageType, TextMessageBody, VoiceMessageBody } from '../../types/chat'
 import { useChat, BusEvents, bus } from '../../composables/useChat'
 import { useChatStore } from '../../stores/chat'
-import { checkConversation, searchByQuery } from '../../services/api/assistant'
+import { checkConversation, getQaAnswer, searchByQuery } from '../../services/api/assistant'
 
 import UserMessage from './UserMessage.vue'
 import AssistantMessage from './AssistantMessage.vue'
+import { StopIcon } from '@heroicons/vue/24/solid'
+
 import { storeToRefs } from 'pinia'
 
 
 // Pinia: Chat Store
 const chatStore = useChatStore()
-const { isQuering } = storeToRefs(chatStore)
+const { isQuering, assistantState } = storeToRefs(chatStore)
 
 const chatContainer = ref()
 
@@ -78,10 +80,12 @@ function addMessage(newMessage: Message) {
 }
 
 async function onUserMessageSubmit(userMessage: Message) {
+    const query = userMessage.type === 'text' ? (userMessage.body as TextMessageBody).text : (userMessage.body as VoiceMessageBody).transcription
+    if (!query) return  
+
     addMessage(userMessage)
-    if (chatStore.assistantState === 'idle') {
-        const query = userMessage.type === 'text' ? (userMessage.body as TextMessageBody).text : (userMessage.body as VoiceMessageBody).transcription
-        if (!query) return
+
+    if (assistantState.value === 'idle') {
 
         messages.value.push({
             type: 'document',
@@ -95,9 +99,7 @@ async function onUserMessageSubmit(userMessage: Message) {
         const assistantVerifyResponse = await checkConversation(messages.value)
         const isConversation = !assistantVerifyResponse.ok
 
-        if (
-            isConversation
-        ) {
+        if (isConversation) {
             messages.value[messages.value.length - 1] = {
                 type: 'text',
                 author: 'assistant',
@@ -113,27 +115,53 @@ async function onUserMessageSubmit(userMessage: Message) {
                     author: 'assistant',
                     body: {
                         text: result.text,
-                        referenceId: result.documents[0].id
+                        referenceId: result.documents[0].id,
+                        documents: result.documents
                     }
                 }
+                chatStore.$patch(state => state.assistantState = 'qa')
                 scrollChatToBottom()
             } catch (error) {
                 console.log(error);
             }
         }
 
-
-
-
         chatStore.$patch(state => state.isQuering = false)
 
-    } else {
-        // Alredy quered
+    } else if (assistantState.value === 'qa') {
 
+        chatStore.$patch(state => state.isQuering = true)
+
+        messages.value.push({
+            type: 'text',
+            author: 'assistant',
+            body: null
+        })
+
+        const curruntMessages = [...messages.value]
+
+        const lastDocumentMessage = curruntMessages.reverse().find(m => m.type === 'document')
+        const document = (lastDocumentMessage?.body as DocumentMessageBody).documents[0] // TODO: change on slider
+        const qaResponse = await getQaAnswer(document, query)
+
+        messages.value[messages.value.length - 1] = {
+            type: 'text',
+            author: 'assistant',
+            body: {
+                text: qaResponse.answer,
+            }
+        }
+
+        chatStore.$patch(state => state.isQuering = false)
     }
 }
 
 bus.on(BusEvents.USER_MESSAGE, (m) => onUserMessageSubmit(m.message))
+
+function onQaStopClicked() {
+    chatStore.$patch(state => state.assistantState = 'idle')
+    messages.value.push(startMessage)
+}
 
 </script>
 
@@ -144,5 +172,8 @@ bus.on(BusEvents.USER_MESSAGE, (m) => onUserMessageSubmit(m.message))
                 :is-quering="(idx === messages.length - 1) && isQuering" />
             <UserMessage v-else :is-latest="idx === messages.length - 1" :message="message" />
         </template>
+        <div class="flex justify-center">
+            <button v-if="assistantState === 'qa'" class="btn btn-outline btn-sm ml-3" @click="onQaStopClicked"> Остановить разговор <StopIcon class="w-4 h-4" /> </button>
+        </div>
     </div>
 </template>

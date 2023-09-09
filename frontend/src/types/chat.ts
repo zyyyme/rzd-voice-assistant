@@ -1,5 +1,7 @@
+import { KnowledgeBaseArticle } from "./api"
+
 export type Author = 'assistant' | 'user'
-export type MessageType = 'text' | 'document' | 'voice'  // 'че-та еще '
+export type MessageType = 'text' | 'document' | 'voice' // 'че-та еще '
 
 export interface Message {
     author: Author
@@ -22,5 +24,6 @@ export interface TextMessageBody {
 export interface DocumentMessageBody {
     text: string,
     referenceId: string,
-    id?: string
+    id?: string,
+    documents: KnowledgeBaseArticle[]
 }

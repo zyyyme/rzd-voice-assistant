@@ -27,3 +27,7 @@ export interface CheckConverstionResponse {
     text: string
     ok: boolean
 }
+
+export interface QaResponse {
+    answer: string
+}
