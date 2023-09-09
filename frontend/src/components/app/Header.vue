@@ -17,15 +17,15 @@ import { RouterLink } from 'vue-router';
                     <li>
                         <RouterLink to="bd">База знаний</RouterLink>
                         <ul class="p-2">
-                            <li><a>Глоссарий</a></li>
-                            <li><a>Инструктции</a></li>
+                            <li><RouterLink to="">Глоссарий</RouterLink></li>
+                            <li><RouterLink to="/knowledge-base">Инструкции</RouterLink></li>
                         </ul>
                     </li>
                     <li><RouterLink to="/history">История</RouterLink></li>
                 </ul>
             </div>
             <a href="/" class="btn btn-ghost normal-case text-xl">
-                <img src="/logo.svg" alt=""> x 23:59
+                <img src="/svg/logo.svg" alt=""> x 23:59
             </a>
             </div>
             <div class="navbar-center hidden lg:flex">

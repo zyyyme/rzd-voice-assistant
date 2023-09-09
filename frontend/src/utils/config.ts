@@ -1,0 +1,1 @@
+export const hasApiMocked = () => import.meta.env.HAS_API_MOCKED === true

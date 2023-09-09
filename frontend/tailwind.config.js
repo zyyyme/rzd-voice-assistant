@@ -15,10 +15,16 @@ export default {
           "primary": "#e21a1a",
           "secondary": "#fff",
           "accent": "#394a58",
+          "neutral": "#2f2839",
+          "base-100": "#fff",
+          // "info": "#a7c8e6",
+          // "success": "#248f5d",
+          // "warning": "#dbad06",
+          // "error": "#f92b06",
         },
       },
-      "dark",
-      "cupcake",
+      // "light",
+      "dark"
     ],
   },
 }

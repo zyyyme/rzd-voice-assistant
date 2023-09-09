@@ -1,13 +1,39 @@
 <script setup>
+import { ref } from 'vue'
 import VoiceInput from './VoiceInput.vue';
+import { useChat } from '../../composables/useChat'
+
+const textInput = ref('')
+const isVoiceInputEnabled = ref(false)
+
+const { onUserMessage } = useChat()
+
+function onMessageSubmit () {
+    if (textInput.value.length > 0) {
+        onUserMessage({ author: 'user', type: 'text', body: { text: textInput.value}})
+        textInput.value = ''
+    }
+}
+
+function toggleVoiceInput (value) {
+    isVoiceInputEnabled.value = value
+}
+
+function onVoiceSubmit (audioObject) {
+    onUserMessage({ author: 'user', type: 'voice', body: { audioUrl: audioObject.url } })
+    toggleVoiceInput(false)
+}
 </script>
 
 <template>
-    <div class="w-full container flex justify-center">
-        <div class="inline-flex">
-            <VoiceInput />
-            <input placeholder="Напишите что хотите спросить" class="mx-3 input input-accent w-full min-w-full">
-            <button class="btn btn-primary">
+    <div class="w-full container flex justify-center" >
+        <div class="flex w-full lg:inline-flex">
+            <VoiceInput v-if="isVoiceInputEnabled" @close="() => toggleVoiceInput(false)" @submit="onVoiceSubmit" />
+            <button class="btn btn-outline btn-circle" @click="() => toggleVoiceInput(true)">
+                <img src="/svg/micro.svg" alt="">
+            </button>
+            <input v-model.trim="textInput" placeholder="Напишите что хотите спросить" class="mx-3 input input-accent w-full" @keydown.enter="onMessageSubmit">
+            <button class="btn btn-primary" @click="onMessageSubmit" >
                 <slot>
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0 0 32 32"
                         fill="white">
