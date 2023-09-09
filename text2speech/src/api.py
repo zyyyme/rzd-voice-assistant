@@ -19,7 +19,7 @@ def get_data_from_file(file_path: str):
     with open(file=file_path, mode="rb") as file_like:
         yield file_like.read()
 
-@app.post("/text2speech")
+@app.get("/text2speech")
 def text2speech(text: str):
     
     sample_rate = 48000
