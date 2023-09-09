@@ -12,6 +12,6 @@ export async function text2speech (text: string): Promise<Blob> {
     return new Blob()
 }
 
-export function getText2SpeechLink (text) {
+export function getText2SpeechLink (text: string) {
     return `${import.meta.env.VITE_API_URL}/text-to-speech/encode?text=${text}`
 }

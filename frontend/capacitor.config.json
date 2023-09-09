@@ -3,6 +3,8 @@
   "appName": "RZD-AI-Assistant",
   "webDir": "dist",
   "server": {
+    "hostname": "localhost",
+    "iosScheme": "https",
     "androidScheme": "https"
   }
 }

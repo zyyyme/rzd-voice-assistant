@@ -16,5 +16,6 @@
     "types": ["vite/client", "node"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["android/**"]
   // "references": [{ "path": "./tsconfig.node.json" }]
 }

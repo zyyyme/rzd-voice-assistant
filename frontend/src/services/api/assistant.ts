@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid'
 import { api } from './'
 
 import { hasApiMocked } from '../../utils/config'
-import { DocumentMessageBody } from '../../types/chat'
+import { DocumentMessageBody, Message } from '../../types/chat'
 import { SearchResponse, CheckConverstionResponse } from '../../types/api'
 
 const responseQueryMock: DocumentMessageBody = {

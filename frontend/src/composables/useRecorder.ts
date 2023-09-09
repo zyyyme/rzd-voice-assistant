@@ -69,10 +69,10 @@ export const useRecorder: (options?: Partial<RecorderEvents>) => RecorderControl
 
     const startRecording: () => void = () => {
         if (timerInterval.value !== null) return;
-
-        navigator.mediaDevices
-            .getUserMedia({ audio: true })
+            navigator.mediaDevices
+                .getUserMedia({ audio: true, video: false })
             .then((stream) => {
+                // alert('Streaming!')
                 activeStream.value = stream;
                 isRecording.value = true;
                 const recorder: MediaRecorder = new MediaRecorder(stream);
@@ -112,7 +112,10 @@ export const useRecorder: (options?: Partial<RecorderEvents>) => RecorderControl
 
                 AudioContext.startAnalyze(stream);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => { 
+                console.log(err)
+                alert(err)
+            } );
     };
 
     const getMp3 = (): Promise<Blob> => {
