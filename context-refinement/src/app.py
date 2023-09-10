@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List, Literal, Dict
-from .openai import configure_openai, SYSTEM_PROMPT
+from oai import configure_openai, SYSTEM_PROMPT
 import openai
 
 
@@ -29,10 +29,10 @@ class Response(BaseModel):
 
 
 def convert_speech_to_message(speech: Speech) -> Dict[str, str]:
-    return {"role": "user" if speech.role == "user" else "assistent", "content": speech.text}
+    return {"role": "user" if speech.role == "user" else "assistant", "content": speech.text}
 
 
-@app.get('/refine')
+@app.post('/refine')
 def refine(request: Request) -> Response:
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
     messages.extend(convert_speech_to_message(speech) for speech in request.context)
