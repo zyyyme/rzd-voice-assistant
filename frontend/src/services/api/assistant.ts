@@ -10,12 +10,12 @@ export async function searchByQuery (query: string): Promise<SearchResponse> {
 }
 
 export async function checkConversation (history: Message[]): Promise<CheckConverstionResponse> {
-    if (import.meta.env.VITE_IS_MOCKED_CONVERSATION) return { text: 'Ну и что?', ok: true }
+    if (import.meta.env.VITE_IS_MOCKED_CONVERSATION) return { text: 'Не понял, уточни, пожалуйста', ok: true }
     return api.post('/check', { history })
 }
 
 export async function getQaAnswer(document: KnowledgeBaseArticle, userQuery: string): Promise<QaResponse> {
-    if (import.meta.env.VITE_IS_MOCKED_CONVERSATION) return { answer: 'Я не понимаю, спроси еще' }
+    if (import.meta.env.VITE_IS_MOCKED_CONVERSATION) return { answer: '* Тут будет ответ от LlaMa *' }
     const { fault, reason, solution } = document
     return api.post('/qa', { fault, reason, solution, user_query: userQuery })
 }

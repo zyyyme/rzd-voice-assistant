@@ -3,9 +3,12 @@ import { ref } from 'vue'
 import VoiceInput from './VoiceInput.vue';
 import { useChat } from '../../composables/useChat'
 import { speech2text } from '../../services/api/voice'
+import { useChatStore } from '../../stores/chat';
 
 const textInput = ref('')
 const isVoiceInputEnabled = ref(false)
+
+const chatStore = useChatStore()
 
 const { onUserMessage } = useChat()
 
@@ -21,7 +24,9 @@ function toggleVoiceInput (value) {
 }
 
 async function onVoiceSubmit (audioObject) {
+    chatStore.isTranscribing = true
     const data = await speech2text(audioObject.data)
+    chatStore.isTranscribing = false
     onUserMessage({ author: 'user', type: 'voice', body: { audioUrl: audioObject.url, transcription: data.decoded_text } })
     toggleVoiceInput(false)
 }

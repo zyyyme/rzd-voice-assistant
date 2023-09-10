@@ -9,6 +9,7 @@ export const useChatStore = defineStore('chat-store', () => {
   // const messages = ref<Message[]>([])
 
   const isQuering = ref(false)
+  const isTranscribing = ref(false)
 
-  return { assistantState, isQuering }
+  return { assistantState, isQuering, isTranscribing }
 })

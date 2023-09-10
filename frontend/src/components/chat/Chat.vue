@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, ref } from 'vue'
+import { nextTick, ref, onMounted } from 'vue'
 import { DocumentMessageBody, Message, MessageBody, MessageType, TextMessageBody, VoiceMessageBody } from '../../types/chat'
 import { useChat, BusEvents, bus } from '../../composables/useChat'
 import { useChatStore } from '../../stores/chat'
@@ -78,6 +78,10 @@ function addMessage(newMessage: Message) {
     messages.value.push(newMessage)
     scrollChatToBottom()
 }
+
+onMounted(()=> {
+    chatStore.$patch(state => state.assistantState = 'idle')
+})
 
 async function onUserMessageSubmit(userMessage: Message) {
     const query = userMessage.type === 'text' ? (userMessage.body as TextMessageBody).text : (userMessage.body as VoiceMessageBody).transcription
@@ -161,6 +165,7 @@ bus.on(BusEvents.USER_MESSAGE, (m) => onUserMessageSubmit(m.message))
 function onQaStopClicked() {
     chatStore.$patch(state => state.assistantState = 'idle')
     messages.value.push(startMessage)
+    scrollChatToBottom()
 }
 
 </script>

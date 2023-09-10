@@ -4,9 +4,9 @@ import { usePermission } from '@vueuse/core'
 import { useRecorder } from '../../composables/useRecorder'
 import { AudioVisualizer } from '../../utils';
 import { XMarkIcon } from '@heroicons/vue/24/outline'
-import { speech2text } from '../../services/api/voice'
+import { useChatStore } from '../../stores/chat';
 
-const emits = defineEmits(['close', 'submit'])
+const emits = defineEmits(['close', 'submit']   )
 
 const showVisualization = true
 const visualizationOptions = { backgroundColor: 'rgb(243, 244, 246)' }
@@ -15,6 +15,8 @@ const visualizationType = 'SineWave'
 const  { startRecording, toggleStartAndStop, isRecording } = useRecorder({ getFullAudio: onGetMp3 })
 
 const microphoneAccess = usePermission('microphone')
+
+const chatStore = useChatStore()
 
 async function onGetMp3 (audioObject) {
     console.log('onGetMp3', audioObject);
@@ -50,6 +52,6 @@ onMounted(() => {
             <img v-else src="/svg/stop.svg" alt="">
         </button>
         <canvas v-if="isRecording" :class="[!isRecording && 'visualization--hidden']" ref="canvas"></canvas>
-        <p>Транскрипция</p>
+        <div class="flex items-center" v-if="chatStore.isTranscribing">Транскрипция: <span class="ml-3 loading text-primary loading-lg"></span></div>
     </div>
 </template>

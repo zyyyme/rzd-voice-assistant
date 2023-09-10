@@ -46,7 +46,7 @@ import { RouterLink } from 'vue-router';
             </ul>
             </div>
             <div class="navbar-end">
-                <a id="auth-link" class="btn btn-primary">Войти</a>
+                <a id="auth-link" href="https://social.rzd.ru" class="btn btn-primary">Войти</a>
             </div>
         </div>
     </header>
