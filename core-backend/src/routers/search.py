@@ -12,6 +12,7 @@ r = APIRouter(prefix='/search', tags=['search'])
 @r.get('/', response_model=SearchResponse)
 def search_documents(query: str):
     data = search_in_annoy(query)
+    print(data)
     return data
 
 
