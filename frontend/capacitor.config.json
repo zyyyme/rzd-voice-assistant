@@ -1,6 +1,6 @@
 {
   "appId": "com.aomtech.app",
-  "appName": "RZD-AI-Assistant",
+  "appName": "Miron AI",
   "webDir": "dist",
   "server": {
     "hostname": "localhost",

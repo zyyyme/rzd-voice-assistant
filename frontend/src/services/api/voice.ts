@@ -13,6 +13,5 @@ export async function text2speech (text: string): Promise<Blob> {
 }
 
 export function getText2SpeechLink (text: string) {
-    const url = 'http://178.205.132.246:8079' //import.meta.env.VITE_API_URL
-    return `${url}/text2speech?text=${text}`
+    return `${import.meta.env.VITE_API_URL}/text-to-speech/encode?text=${text}`
 }
