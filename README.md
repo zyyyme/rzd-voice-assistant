@@ -21,3 +21,11 @@
 ```sh
 docker-compose up
 ```
+
+## Обучение
+Обучали модели под домен кейса в jupyter ноутбуках в колабе.
+
+Llama обучали через библиотеку trl (добавлена в сабмодуль)
+Чекпоинт обученных адаптеров положили в google drive: https://drive.google.com/drive/folders/1V-Q-AiOodlivGa3RNnHUWTL28ki2m0xZ?usp=share_link
+
+Датасеты, которые мы геренировали для обучения и валидации лежат в папке datasets
