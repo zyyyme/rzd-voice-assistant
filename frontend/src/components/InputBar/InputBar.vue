@@ -27,7 +27,7 @@ async function onVoiceSubmit (audioObject) {
     chatStore.isTranscribing = true
     const data = await speech2text(audioObject.data)
     chatStore.isTranscribing = false
-    onUserMessage({ author: 'user', type: 'voice', body: { audioUrl: audioObject.url, transcription: data.decoded_text } })
+    onUserMessage({ author: 'user', type: 'voice', body: { audioUrl: audioObject.url, transcription: data.decoded_text, text: data.decoded_text } })
     toggleVoiceInput(false)
 }
 </script>

@@ -71,7 +71,8 @@ const messages = ref<Message[]>([startMessage])
 
 async function scrollChatToBottom() {
     await nextTick()
-    chatContainer.value.scrollTop = chatContainer.value.scrollHeight;
+    if (chatContainer.value.scrollHeight)
+        chatContainer.value.scrollTop = chatContainer.value.scrollHeight;
 }
 
 function addMessage(newMessage: Message) {
@@ -99,8 +100,8 @@ async function onUserMessageSubmit(userMessage: Message) {
 
         chatStore.$patch(state => state.isQuering = true)
 
-        // OpeanAi check conversation
-        const assistantVerifyResponse = await checkConversation(messages.value)
+        // LLvM Check conversation
+        const assistantVerifyResponse = await checkConversation(messages.value.filter(el => el.body))
         const isConversation = !assistantVerifyResponse.ok
 
         if (isConversation) {
@@ -111,6 +112,8 @@ async function onUserMessageSubmit(userMessage: Message) {
                     text: assistantVerifyResponse.text
                 }
             }
+            await nextTick()
+            scrollChatToBottom()
         } else {
             try {
                 const result = await searchByQuery(query)
@@ -152,7 +155,7 @@ async function onUserMessageSubmit(userMessage: Message) {
             type: 'text',
             author: 'assistant',
             body: {
-                text: qaResponse.answer,
+                text: qaResponse.text,
             }
         }
 

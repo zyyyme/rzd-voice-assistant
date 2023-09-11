@@ -1,3 +1,5 @@
+// Original react-hook: https://github.com/chengsokdara/use-whisper/blob/main/src/types.ts
+
 import { ref, onBeforeUnmount, onMounted } from 'vue';
 import RecordRTC from 'recordrtc';
 import hark from 'hark';

@@ -18,6 +18,7 @@
     "@vueuse/core": "^10.4.1",
     "@vueuse/motion": "^2.0.0",
     "axios": "^1.5.0",
+    "dayjs": "^1.11.9",
     "hark": "^1.2.3",
     "lamejs": "^1.2.1",
     "lamejstmp": "^1.0.1",
