@@ -1,0 +1,11 @@
+services:
+  certbot:
+    image: jonasal/nginx-certbot:latest
+    ports:
+      - "443:443"
+      - "80:80"
+    environment:
+      CERTBOT_EMAIL: "surnavhev.nikita@gmail.com"
+    volumes:
+      - "./nginx_secrets:/etc/letsencrypt"
+      - "./user_conf.d:/etc/nginx/user_conf.d:ro"

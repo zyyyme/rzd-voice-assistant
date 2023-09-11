@@ -1,0 +1,47 @@
+version: "3.3"
+
+services:
+  frontend:
+    container_name: miron_frontend
+    networks:
+      - miron_network
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    restart: always
+
+  backend:
+    container_name: miron_backend
+    networks:
+      - miron_network
+    ports:
+      - 8000:8000
+    build:
+      context: core-backend
+      dockerfile: Dockerfile
+    restart: always
+  
+  search:
+    container_name: miron_search
+    networks:
+      - miron_network
+    ports:
+      - 8001:8001
+    build:
+      dockerfile: search/Dockerfile
+    restart: always
+
+  mongo:
+    container_name: mongo
+    image: 'mongo'
+    ports:
+      - '27017:27017'
+    volumes:
+      - /var/lib/mongodb:/data/db
+    restart: unless-stopped
+    networks:
+      - miron_network
+
+
+networks:
+  miron_network:
